@@ -1,0 +1,56 @@
+---
+/**
+ * Services Section
+ * Displays three service offerings using accordions
+ */
+import Accordion from '../ui/Accordion.astro';
+import { useTranslations, type Language } from '../../i18n/utils';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
+
+// Load services data from CMS
+const weddingsData = await import(`../../data/services/${lang}/weddings.json`);
+const corporateData = await import(`../../data/services/${lang}/corporate.json`);
+const privateData = await import(`../../data/services/${lang}/private.json`);
+
+// Combine and sort services by order
+const services = [
+  weddingsData.default,
+  corporateData.default,
+  privateData.default
+].sort((a, b) => a.order - b.order).map(service => ({
+  title: service.title,
+  content: service.description.split('\n\n').map((p: string) => `<p>${p}</p>`).join('\n      ')
+}));
+---
+
+<section id="services" class="section-padding bg-gray-50">
+  <div class="container-custom">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          {t('services.title')}
+        </h2>
+        <p class="text-xl text-gray-600">
+          {lang === 'es'
+            ? 'Música en vivo profesional adaptada a tu evento'
+            : 'Professional live music tailored to your event'
+          }
+        </p>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        {services.map((service, index) => (
+          <Accordion title={service.title} isOpen={index === 0}>
+            <div set:html={service.content} />
+          </Accordion>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

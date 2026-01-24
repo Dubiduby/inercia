@@ -1,0 +1,67 @@
+---
+/**
+ * Accordion Component
+ * Native HTML accordion with smooth animations
+ */
+
+interface Props {
+  title: string;
+  isOpen?: boolean;
+}
+
+const { title, isOpen = false } = Astro.props;
+---
+
+<details class="accordion border-b border-gray-200" open={isOpen}>
+  <summary class="accordion-header cursor-pointer py-4 px-6 hover:bg-gray-50 transition-colors flex justify-between items-center">
+    <h3 class="text-lg font-semibold text-gray-900">{title}</h3>
+    <svg
+      class="accordion-icon w-5 h-5 text-gray-500 transition-transform duration-200"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </summary>
+  <div class="accordion-content px-6 pb-4 text-gray-700">
+    <div class="prose prose-sm max-w-none">
+      <slot />
+    </div>
+  </div>
+</details>
+
+<style>
+  /* Rotate icon when open */
+  details[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Remove default marker */
+  summary::-webkit-details-marker,
+  summary::marker {
+    display: none;
+  }
+
+  /* Smooth animation for content */
+  .accordion-content {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Focus styles for accessibility */
+  summary:focus {
+    outline: 2px solid #3182ce;
+    outline-offset: 2px;
+  }
+</style>

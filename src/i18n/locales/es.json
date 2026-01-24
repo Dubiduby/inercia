@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Nosotros",
+    "services": "Servicios",
+    "gallery": "Galería",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "cta": "Contáctanos",
+    "scrollDown": "Desliza para más"
+  },
+  "about": {
+    "title": "Sobre Nosotros"
+  },
+  "services": {
+    "title": "Nuestros Servicios"
+  },
+  "gallery": {
+    "title": "Galería"
+  },
+  "logos": {
+    "title": "Han Confiado en Nosotros"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "¿Listo para hacer de tu evento algo inolvidable?",
+    "description": "Estamos aquí para ayudarte a crear la experiencia musical perfecta.",
+    "email": "Envíanos un correo",
+    "whatsapp": "Escríbenos por WhatsApp"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "social": "Síguenos"
+  },
+  "common": {
+    "learnMore": "Saber más",
+    "close": "Cerrar",
+    "menu": "Menú"
+  }
+}

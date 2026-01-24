@@ -1,0 +1,104 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# For local development testing
+local_backend: true
+
+media_folder: "public/images"
+public_folder: "/images"
+
+# i18n configuration
+i18n:
+  structure: multiple_folders
+  locales: [es, en]
+  default_locale: es
+
+collections:
+  # Site Settings
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "general"
+        label: "General Settings"
+        file: "src/data/site.json"
+        fields:
+          - { name: "title", label: "Site Title", widget: "string" }
+          - { name: "description", label: "Site Description", widget: "text" }
+          - { name: "email", label: "Contact Email", widget: "string" }
+          - { name: "whatsapp", label: "WhatsApp Number", widget: "string", hint: "Phone number without + or spaces" }
+          - label: "Social Media"
+            name: "social"
+            widget: "object"
+            fields:
+              - { name: "facebook", label: "Facebook URL", widget: "string", required: false }
+              - { name: "instagram", label: "Instagram URL", widget: "string", required: false }
+
+  # Hero Section (i18n)
+  - name: "hero"
+    label: "Hero Section"
+    label_singular: "Hero"
+    folder: "src/data/hero"
+    extension: "json"
+    format: "json"
+    create: false
+    identifier_field: "title"
+    i18n: true
+    fields:
+      - { name: "title", label: "Hero Title", widget: "string", i18n: true }
+      - { name: "subtitle", label: "Hero Subtitle", widget: "text", i18n: true }
+      - { name: "videoUrl", label: "Video URL", widget: "string", hint: "Path to hero video (e.g., /videos/hero-video.mp4)", i18n: duplicate }
+      - { name: "ctaText", label: "CTA Button Text", widget: "string", i18n: true }
+
+  # About Section (i18n)
+  - name: "about"
+    label: "About Section"
+    label_singular: "About"
+    folder: "src/data/about"
+    extension: "json"
+    format: "json"
+    create: false
+    identifier_field: "title"
+    i18n: true
+    fields:
+      - { name: "title", label: "Section Title", widget: "string", i18n: true }
+      - { name: "content", label: "Content", widget: "markdown", i18n: true }
+
+  # Services (i18n)
+  - name: "services"
+    label: "Services"
+    label_singular: "Service"
+    folder: "src/data/services/{{locale}}"
+    create: true
+    identifier_field: "title"
+    i18n: true
+    fields:
+      - { name: "title", label: "Service Title", widget: "string", i18n: true }
+      - { name: "description", label: "Description", widget: "markdown", i18n: true }
+      - { name: "icon", label: "Icon Name", widget: "string", required: false, hint: "Optional icon identifier", i18n: duplicate }
+      - { name: "order", label: "Display Order", widget: "number", value_type: "int", default: 1, i18n: duplicate }
+
+  # Gallery
+  - name: "gallery"
+    label: "Gallery"
+    label_singular: "Image"
+    folder: "src/data/gallery"
+    create: true
+    identifier_field: "alt"
+    fields:
+      - { name: "image", label: "Image", widget: "image" }
+      - { name: "alt", label: "Alt Text", widget: "string", hint: "Describe the image for accessibility and SEO" }
+      - { name: "caption", label: "Caption", widget: "string", required: false }
+      - { name: "order", label: "Display Order", widget: "number", value_type: "int", default: 1 }
+
+  # Client/Venue Logos
+  - name: "logos"
+    label: "Client Logos"
+    label_singular: "Logo"
+    folder: "src/data/logos"
+    create: true
+    identifier_field: "name"
+    fields:
+      - { name: "name", label: "Client Name", widget: "string" }
+      - { name: "logo", label: "Logo Image", widget: "image" }
+      - { name: "order", label: "Display Order", widget: "number", value_type: "int", default: 1 }

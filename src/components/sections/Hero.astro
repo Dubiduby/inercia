@@ -1,0 +1,98 @@
+---
+/**
+ * Hero Section
+ * Full-screen hero with background video and CTA
+ */
+import Button from '../ui/Button.astro';
+import { useTranslations, type Language } from '../../i18n/utils';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
+
+// Load hero data from CMS
+const heroData = await import(`../../data/hero/${lang}.json`);
+const { title, subtitle, videoUrl, ctaText } = heroData.default;
+---
+
+<section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+  <!-- Background Video -->
+  <div class="absolute inset-0 z-0">
+    <video
+      class="w-full h-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="/images/hero-poster.jpg"
+    >
+      <source src={videoUrl} type="video/mp4" />
+      <!-- Fallback message -->
+      Your browser does not support the video tag.
+    </video>
+    <!-- Overlay for better text readability -->
+    <div class="absolute inset-0 bg-black/50"></div>
+  </div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 text-center text-white px-4 container-custom">
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
+      {title}
+    </h1>
+    <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto drop-shadow-md">
+      {subtitle}
+    </p>
+    <Button href="#contact" size="lg" variant="primary">
+      {ctaText}
+    </Button>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+    <a href="#about" class="text-white animate-bounce" aria-label={t('hero.scrollDown')}>
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    video {
+      animation: none;
+    }
+    .animate-bounce {
+      animation: none;
+    }
+  }
+
+  /* Hide video on slow connections (optional) */
+  @media (prefers-reduced-data: reduce) {
+    video {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Pause video when not in viewport (performance optimization)
+  const video = document.querySelector('video');
+  if (video) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+    });
+    observer.observe(video);
+  }
+</script>
