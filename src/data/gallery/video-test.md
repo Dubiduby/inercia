@@ -1,6 +1,6 @@
 ---
-image: /images/hero-video.mp4
-alt: video test
+image: /images/image1.png
+alt: singing
 caption: test
-order: 1
+order: 2
 ---
