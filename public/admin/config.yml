@@ -90,6 +90,8 @@ collections:
     folder: "src/data/gallery"
     create: true
     identifier_field: "alt"
+    summary: "Order: {{order}} - {{alt}}"
+    sortable_fields: ["order", "alt", "caption"]
     fields:
       - { name: "image", label: "Image or Video", widget: "file", hint: "Upload an image (.jpg, .png, .webp) or a short video (.mp4, .webm)" }
       - { name: "alt", label: "Alt Text", widget: "string", hint: "Describe the media for accessibility and SEO" }
