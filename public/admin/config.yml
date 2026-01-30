@@ -105,6 +105,8 @@ collections:
     folder: "src/data/logos"
     create: true
     identifier_field: "name"
+    summary: "Order: {{order}} - {{name}}"
+    sortable_fields: ["order", "name"]
     fields:
       - { name: "name", label: "Client Name", widget: "string" }
       - { name: "logo", label: "Logo Image", widget: "image" }

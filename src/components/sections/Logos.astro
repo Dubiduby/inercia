@@ -12,25 +12,21 @@ interface Props {
 const { lang = 'es' } = Astro.props;
 const t = useTranslations(lang);
 
-// Load logos from CMS (dynamically load all JSON files)
-const logoModules = import.meta.glob('../../data/logos/*.json', { eager: true });
+// Load logos from CMS (dynamically load all MD files)
+const logoModules = import.meta.glob('../../data/logos/*.md', { eager: true });
 const logoFiles = Object.values(logoModules);
 const logos = logoFiles.length > 0
   ? logoFiles
-      .map((file: any) => file.default)
+      .map((file: any) => file.frontmatter)
       .sort((a: any, b: any) => a.order - b.order)
       .map((item: any) => ({
         name: item.name,
         src: item.logo
       }))
-  : // Fallback to placeholder data if no CMS data exists
+  : // Fallback to existing logos if no CMS data exists
     [
-      { name: 'Client 1', src: '/images/logos/placeholder-1.png' },
-      { name: 'Client 2', src: '/images/logos/placeholder-2.png' },
-      { name: 'Client 3', src: '/images/logos/placeholder-3.png' },
-      { name: 'Client 4', src: '/images/logos/placeholder-4.png' },
-      { name: 'Client 5', src: '/images/logos/placeholder-5.png' },
-      { name: 'Client 6', src: '/images/logos/placeholder-6.png' }
+      { name: 'INERCIA', src: '/images/logos/inercia-blanco.png' },
+      { name: 'INERCIA', src: '/images/logos/inercia-negro.png' }
     ];
 ---
 
@@ -48,16 +44,14 @@ const logos = logoFiles.length > 0
       </p>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+    <div class="flex flex-wrap justify-center gap-4 md:gap-6">
       {logos.map((logo) => (
-        <div class="flex items-center justify-center">
+        <div class="flex items-center justify-center p-2 w-[calc(50%-8px)] md:w-[calc(33.333%-16px)] lg:w-[calc(16.666%-20px)] h-[80px] md:h-[100px] lg:h-[120px]">
           <img
             src={logo.src}
             alt={`${logo.name} logo`}
-            class="max-w-full h-16 object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+            class="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
             loading="lazy"
-            width="200"
-            height="80"
           />
         </div>
       ))}
