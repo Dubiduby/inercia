@@ -27,6 +27,7 @@ collections:
           - { name: "description", label: "Site Description", widget: "text" }
           - { name: "email", label: "Contact Email", widget: "string" }
           - { name: "whatsapp", label: "WhatsApp Number", widget: "string", hint: "Phone number without + or spaces" }
+          - { name: "backgroundImage", label: "Imagen de Fondo", widget: "image", required: false, hint: "Imagen de fondo de la página. Recomendado: 1920x1080px, formato WebP o JPG" }
           - label: "Social Media"
             name: "social"
             widget: "object"

@@ -10,17 +10,24 @@ import Services from '../../components/sections/Services.astro';
 import Gallery from '../../components/sections/Gallery.astro';
 import Logos from '../../components/sections/Logos.astro';
 import Contact from '../../components/sections/Contact.astro';
+import siteData from '../../data/site.json';
 
 const lang = 'en';
 const pageTitle = "Inercia | Professional Wedding & Event Musicians";
 const pageDescription = "Exceptional live music for weddings, corporate events, and private parties. Professional musicians specializing in creating unforgettable moments for your special occasions.";
+const backgroundImage = siteData.backgroundImage;
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} lang={lang}>
   <Hero lang={lang} />
-  <About lang={lang} />
-  <Services lang={lang} />
-  <Gallery lang={lang} />
-  <Logos lang={lang} />
-  <Contact lang={lang} />
+  <div
+    class="bg-no-repeat bg-cover bg-center"
+    style={backgroundImage ? `background-image: url('${backgroundImage}');` : ''}
+  >
+    <About lang={lang} />
+    <Services lang={lang} />
+    <Gallery lang={lang} />
+    <Logos lang={lang} />
+    <Contact lang={lang} />
+  </div>
 </BaseLayout>
