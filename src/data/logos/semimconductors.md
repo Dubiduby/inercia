@@ -1,5 +1,5 @@
 ---
-name: Semimconductors
-logo: /images/music-semiconductors-1.svg
+name: Steanaway
+logo: /images/steinway-and-sons-logo.svg
 order: 8
 ---
