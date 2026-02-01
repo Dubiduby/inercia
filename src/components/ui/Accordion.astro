@@ -7,16 +7,21 @@
 interface Props {
   title: string;
   isOpen?: boolean;
+  backgroundImage?: string;
 }
 
-const { title, isOpen = false } = Astro.props;
+const { title, isOpen = false, backgroundImage } = Astro.props;
 ---
 
-<details class="accordion border-b border-gray-200" open={isOpen}>
-  <summary class="accordion-header cursor-pointer py-4 px-6 hover:bg-gray-50 transition-colors flex justify-between items-center">
-    <h3 class="text-lg font-semibold text-gray-900">{title}</h3>
+<details
+  class={`accordion rounded-lg shadow-lg overflow-hidden ${backgroundImage ? 'bg-cover bg-center' : 'bg-white'}`}
+  style={backgroundImage ? `background-image: url(${backgroundImage});` : ''}
+  open={isOpen}
+>
+  <summary class={`accordion-header cursor-pointer py-4 px-6 transition-colors flex justify-between items-center ${backgroundImage ? 'bg-white/60 hover:bg-white/70' : 'hover:bg-gray-50'}`}>
+    <h3 class={`text-lg font-semibold ${backgroundImage ? 'text-gray-800' : 'text-gray-900'}`}>{title}</h3>
     <svg
-      class="accordion-icon w-5 h-5 text-gray-500 transition-transform duration-200"
+      class={`accordion-icon w-5 h-5 transition-transform duration-200 ${backgroundImage ? 'text-gray-800' : 'text-gray-500'}`}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -24,7 +29,7 @@ const { title, isOpen = false } = Astro.props;
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
   </summary>
-  <div class="accordion-content px-6 pb-4 text-gray-700">
+  <div class={`accordion-content px-6 pb-4 ${backgroundImage ? 'bg-white/60 text-gray-800' : 'text-gray-700'}`}>
     <div class="prose prose-sm max-w-none">
       <slot />
     </div>
@@ -59,9 +64,9 @@ const { title, isOpen = false } = Astro.props;
     }
   }
 
-  /* Focus styles for accessibility */
-  summary:focus {
-    outline: 2px solid #3182ce;
-    outline-offset: 2px;
+  /* Focus styles for accessibility - only show on keyboard navigation */
+  summary:focus-visible {
+    outline: 1px solid #e5e7eb;
+    outline-offset: 0;
   }
 </style>
