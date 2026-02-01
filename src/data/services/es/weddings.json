@@ -1,6 +1,6 @@
 {
   "title": "Talleres para equipos de trabajo y Team Building",
-  "description": "Refuerza tu equipo:\n\nEn nuestros talleres de Team Building, experienciamos el concepto de *armonía* creando un espacio de confianza donde, a través del cuerpo y la voz, nos atrevemos a salir de nuestra zona de confort para integrar elementos clave como la *escucha*, la *creatividad* o la *delegación* dentro de un equipo.",
+  "description": "\n\nEn nuestros talleres de Team Building, experienciamos el concepto de *armonía* creando un espacio de confianza donde, a través del cuerpo y la voz, nos atrevemos a salir de nuestra zona de confort para integrar elementos clave como la *escucha*, la *creatividad* o la *delegación* dentro de un equipo.",
   "tags": [
     "Trabajo en equipo",
     "Creatividad",
@@ -12,5 +12,6 @@
   "youtubeVideoId": "d076d5o62H8",
   "layout": "center",
   "backgroundImage": "",
-  "order": 2
+  "order": 2,
+  "subtitle": "Refuerza tu equipo:"
 }

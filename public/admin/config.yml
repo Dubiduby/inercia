@@ -84,6 +84,7 @@ collections:
     sortable_fields: ["order", "title"]
     fields:
       - { name: "title", label: "Service Title", widget: "string", i18n: true }
+      - { name: "subtitle", label: "Subtitle", widget: "string", required: false, i18n: true }
       - { name: "description", label: "Description", widget: "text", i18n: true }
       - { name: "tags", label: "Tags", widget: "list", i18n: true, hint: "Lista de tags (ej: Bodas, Toda España)" }
       - { name: "youtubeVideoId", label: "YouTube Video ID", widget: "string", required: false, i18n: duplicate, hint: "ID del video (la parte después de v= en la URL)" }

@@ -25,19 +25,21 @@ const services = Object.values(allServices)
   .sort((a, b) => a.order - b.order)
   .map(service => ({
     title: service.title,
+    subtitle: service.subtitle || '',
     description: service.description,
     tags: service.tags || [],
     youtubeVideoId: service.youtubeVideoId || '',
     verticalVideo: service.verticalVideo || false,
+    mobileFrame: service.mobileFrame || false,
     layout: service.layout || 'center',
     backgroundImage: service.backgroundImage || ''
   }));
 
 // Layout classes based on service layout setting
 const layoutClasses = {
-  spread: 'grid grid-cols-1 md:grid-cols-2 gap-6 items-start',
-  center: 'flex flex-col md:flex-row gap-10 items-start justify-center',
-  right: 'flex flex-col md:flex-row gap-10 items-start justify-end'
+  spread: 'grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch',
+  center: 'flex flex-col md:flex-row gap-10 items-stretch justify-center',
+  right: 'flex flex-col md:flex-row gap-10 items-stretch justify-end'
 };
 ---
 
@@ -59,7 +61,13 @@ const layoutClasses = {
       <div class="space-y-4">
         {services.map((service, index) => (
           <Accordion title={service.title} isOpen={index === 0} backgroundImage={service.backgroundImage}>
-            <div class="space-y-6">
+            <div class="space-y-6 mt-4">
+              <!-- Subtitle -->
+              {service.subtitle && (
+                <h4 class={`text-lg font-semibold ${service.backgroundImage ? 'text-gray-800' : 'text-gray-700'}`}>
+                  {service.subtitle}
+                </h4>
+              )}
               <!-- Description -->
               <div class={`prose prose-sm max-w-none ${service.backgroundImage ? 'text-gray-800' : 'text-gray-700'}`}>
                 {service.description.split('\n\n').map((p: string) => (
@@ -70,22 +78,24 @@ const layoutClasses = {
               <!-- Tags and Video -->
               <div class={layoutClasses[service.layout as keyof typeof layoutClasses]}>
                 <!-- Tags List -->
-                <div class="space-y-1">
+                <div class="flex flex-col gap-2 items-start">
                   {service.tags.map((tag: string) => (
-                    <p class={`font-semibold ${service.backgroundImage ? 'text-gray-800' : 'text-gray-900'}`}>{tag}</p>
+                    <span class={`inline-block px-1 py-0.2 font-semibold rounded-full ${service.backgroundImage ? 'text-gray-800' : 'text-gray-900'} bg-[#dbc7b2]`}>{tag}</span>
                   ))}
                 </div>
 
                 <!-- YouTube Video -->
                 {service.youtubeVideoId && (
-                  <div class={`rounded-lg overflow-hidden shadow-md ${service.verticalVideo ? 'aspect-[9/16] w-full md:w-48 md:ml-32' : 'aspect-video w-full md:w-80'}`}>
-                    <iframe
-                      src={`https://www.youtube.com/embed/${service.youtubeVideoId}`}
-                      title={service.title}
-                      class="w-full h-full border-0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen
-                    ></iframe>
+                  <div class={`${service.mobileFrame ? 'bg-gray-900 p-2 rounded-[2rem] shadow-xl' : ''} ${service.verticalVideo ? 'aspect-[9/16] w-full md:w-48 md:ml-32' : 'aspect-video w-full md:w-80'}`}>
+                    <div class={`rounded-lg overflow-hidden shadow-md ${service.mobileFrame ? 'rounded-[1.5rem]' : ''} h-full`}>
+                      <iframe
+                        src={`https://www.youtube.com/embed/${service.youtubeVideoId}`}
+                        title={service.title}
+                        class="w-full h-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                      ></iframe>
+                    </div>
                   </div>
                 )}
               </div>
