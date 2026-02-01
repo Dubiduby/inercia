@@ -1,6 +1,6 @@
 {
   "title": "Workshops for work teams and Team Building",
-  "description": "Strengthen your team: \n\nIn our Team Building workshops, we experience the concept of *harmony* creating a space of trust where, through the body and voice, we dare to leave our comfort zone to integrate key elements such as *listening*, * creativity* or *delegation* within a team.",
+  "description": "\n\nIn our Team Building workshops, we experience the concept of *harmony* creating a space of trust where, through the body and voice, we dare to leave our comfort zone to integrate key elements such as *listening*, * creativity* or *delegation* within a team.",
   "tags": [
     "Teamwork",
     "Creativity",
@@ -12,5 +12,6 @@
   "youtubeVideoId": "d076d5o62H8",
   "layout": "center",
   "backgroundImage": "",
-  "order": 2
+  "order": 2,
+  "subtitle": "Strengthen your team: "
 }

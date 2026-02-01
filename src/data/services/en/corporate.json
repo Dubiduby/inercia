@@ -6,6 +6,7 @@
   ],
   "youtubeVideoId": "dQw4w9WgXcQ",
   "layout": "spread",
-  "backgroundImage": "/images/8300028.jpg",
-  "order": 1
+  "backgroundImage": "/images/banner.png",
+  "order": 1,
+  "subtitle": "Two crazy people, one goal:"
 }

@@ -14,11 +14,13 @@ const { title, isOpen = false, backgroundImage } = Astro.props;
 ---
 
 <details
-  class={`accordion rounded-lg shadow-lg overflow-hidden ${backgroundImage ? 'bg-cover bg-center' : 'bg-white'}`}
-  style={backgroundImage ? `background-image: url(${backgroundImage});` : ''}
+  class="accordion rounded-lg shadow-lg overflow-hidden bg-white"
   open={isOpen}
 >
-  <summary class={`accordion-header cursor-pointer py-4 px-6 transition-colors flex justify-between items-center ${backgroundImage ? 'bg-white/60 hover:bg-white/70' : 'hover:bg-gray-50'}`}>
+  <summary
+    class={`accordion-header cursor-pointer py-6 px-6 transition-colors flex justify-between items-center ${backgroundImage ? 'bg-cover bg-center has-bg-image' : 'hover:bg-gray-50 no-bg-image'}`}
+    style={backgroundImage ? `background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url(${backgroundImage});` : ''}
+  >
     <h3 class={`text-lg font-semibold ${backgroundImage ? 'text-gray-800' : 'text-gray-900'}`}>{title}</h3>
     <svg
       class={`accordion-icon w-5 h-5 transition-transform duration-200 ${backgroundImage ? 'text-gray-800' : 'text-gray-500'}`}
@@ -29,7 +31,7 @@ const { title, isOpen = false, backgroundImage } = Astro.props;
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
   </summary>
-  <div class={`accordion-content px-6 pb-4 ${backgroundImage ? 'bg-white/60 text-gray-800' : 'text-gray-700'}`}>
+  <div class="accordion-content px-6 pb-4 bg-white text-gray-700">
     <div class="prose prose-sm max-w-none">
       <slot />
     </div>
@@ -40,6 +42,11 @@ const { title, isOpen = false, backgroundImage } = Astro.props;
   /* Rotate icon when open */
   details[open] .accordion-icon {
     transform: rotate(180deg);
+  }
+
+  /* Gray background when open and no background image */
+  details[open] .no-bg-image {
+    background-color: #f3f4f6;
   }
 
   /* Remove default marker */

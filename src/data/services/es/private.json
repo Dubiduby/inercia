@@ -1,10 +1,12 @@
 {
-  "title": "Fiestas Privadas y Celebraciones",
-  "description": "Transforma tu evento privado en una celebración extraordinaria con actuaciones musicales personalizadas. Ya sea una fiesta de cumpleaños, celebración de aniversario o reunión íntima, aportamos energía y sofisticación a tu ocasión especial.\n\nNuestro enfoque flexible significa que podemos realizar sets acústicos para lugares íntimos o arreglos de banda completa para celebraciones más grandes, siempre manteniendo el más alto nivel de profesionalismo y excelencia musical.",
-  "tags": [],
-  "youtubeVideoId": "dQw4w9WgXcQ",
   "verticalVideo": true,
   "layout": "spread",
-  "backgroundImage": "/images/6748793.jpg",
-  "order": 3
+  "mobileFrame": true,
+  "backgroundImage": "/images/image8.png",
+  "order": 3,
+  "youtubeVideoId": "dQw4w9WgXcQ",
+  "subtitle": "¿Tienes una idea loca?",
+  "title": "Actuaciones",
+  "tags": [],
+  "description": "Si la respuesta es sí, contáctanos y le damos forma. No se nos resiste una buena sorpresa. Ya sea un mini-show estilo \"Mayu maná\" o un coro \"a capella\"\nhaciendo tu canción favorita."
 }
