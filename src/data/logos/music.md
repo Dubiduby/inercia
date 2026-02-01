@@ -1,5 +1,5 @@
 ---
-name: Music
-logo: /images/music-1.svg
+name: Coca-cola
+logo: /images/coca-cola-2021.svg
 order: 3
 ---

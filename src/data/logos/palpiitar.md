@@ -1,5 +1,5 @@
 ---
-name: Palpiitar
-logo: /images/palpitar-music.svg
+name: Fender
+logo: /images/fender-1.svg
 order: 4
 ---

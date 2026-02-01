@@ -1,5 +1,5 @@
 ---
-name: sony
-logo: /images/sony-music-1.svg
+name: gibson
+logo: /images/gibson-guitar-logo.svg
 order: 5
 ---
