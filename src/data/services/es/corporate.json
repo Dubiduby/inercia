@@ -1,5 +1,18 @@
 {
-  "title": "Eventos Corporativos y Conferencias",
-  "description": "Eleva tus reuniones corporativas con entretenimiento en vivo profesional. Desde música de fondo elegante durante sesiones de networking hasta actuaciones energéticas para celebraciones de empresa, adaptamos nuestro estilo a tus necesidades empresariales.\n\nEntendemos la importancia de crear el ambiente adecuado para tu imagen corporativa y podemos proporcionar música que mejore tu evento sin opacar conversaciones o presentaciones.",
-  "order": 2
+  "title": "Banda de versiones: conciertos para bodas, fiestas y eventos",
+  "description": "Pasarlo en grande creando momentos inolvidables donde tu gente se deje llevar, se emocione y, si la ocasión lo demanda, baile como si no hubiera un mañana. ",
+  "tags": [
+    "Toda España",
+    "UE",
+    "Bodas",
+    "Fiestas",
+    "Cumples",
+    "Eventos",
+    "Fiestas del Pueblo",
+    "Equipo de sonido propio"
+  ],
+  "youtubeVideoId": "dQw4w9WgXcQ",
+  "layout": "spread",
+  "backgroundImage": "/images/8300028.jpg",
+  "order": 1
 }
