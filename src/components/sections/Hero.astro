@@ -3,14 +3,14 @@
  * Hero Section
  * Full-screen hero with background video and CTA
  */
-import Button from '../ui/Button.astro';
-import { useTranslations, type Language } from '../../i18n/utils';
+import Button from "../ui/Button.astro";
+import { useTranslations, type Language } from "../../i18n/utils";
 
 interface Props {
   lang?: Language;
 }
 
-const { lang = 'es' } = Astro.props;
+const { lang = "es" } = Astro.props;
 const t = useTranslations(lang);
 
 // Load hero data from CMS
@@ -18,7 +18,10 @@ const heroData = await import(`../../data/hero/${lang}.json`);
 const { title, subtitle, videoUrl, ctaText } = heroData.default;
 ---
 
-<section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+<section
+  id="hero"
+  class="relative h-screen flex items-center justify-center overflow-hidden"
+>
   <!-- Background Video -->
   <div class="absolute inset-0 z-0">
     <video
@@ -39,7 +42,10 @@ const { title, subtitle, videoUrl, ctaText } = heroData.default;
   </div>
 
   <!-- Hero Content -->
-  <div class="relative z-10 text-center text-white px-4 container-custom">
+  <div
+    id="hero-content"
+    class="relative z-10 text-center text-white px-4 container-custom"
+  >
     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
       {title}
     </h1>
@@ -51,17 +57,127 @@ const { title, subtitle, videoUrl, ctaText } = heroData.default;
     </Button>
   </div>
 
+  <!-- Sound Toggle Button -->
+  <button
+    type="button"
+    id="hero-sound-toggle"
+    class="absolute bottom-8 right-8 z-20 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all duration-300"
+    aria-label="Toggle sound"
+  >
+    <svg
+      class="icon-muted w-6 h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+      />
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"
+      />
+    </svg>
+    <svg
+      class="icon-unmuted w-6 h-6 hidden"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+      />
+    </svg>
+  </button>
+
   <!-- Scroll Indicator -->
   <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-    <a href="#about" class="text-white animate-bounce" aria-label={t('hero.scrollDown')}>
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    <a
+      href="#about"
+      class="text-white animate-bounce"
+      aria-label={t("hero.scrollDown")}
+    >
+      <svg
+        class="w-8 h-8"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
       </svg>
     </a>
   </div>
 </section>
 
 <style>
+  /* Hero content fade transition */
+  #hero-content {
+    opacity: 1;
+  }
+
+  #hero-content.hiding {
+    animation: fadeOut 2s ease-in forwards;
+  }
+
+  #hero-content.showing {
+    animation: fadeIn 2s ease-out forwards;
+  }
+
+  #hero-content.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    75% {
+      opacity: 0.2;
+    }
+    100% {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    25% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.6;
+    }
+    75% {
+      opacity: 0.85;
+    }
+    100% {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
   /* Respect user's motion preferences */
   @media (prefers-reduced-motion: reduce) {
     video {
@@ -69,6 +185,13 @@ const { title, subtitle, videoUrl, ctaText } = heroData.default;
     }
     .animate-bounce {
       animation: none;
+    }
+    #hero-content {
+      transition: none;
+    }
+    #hero-content.hidden {
+      opacity: 1;
+      pointer-events: auto;
     }
   }
 
@@ -82,7 +205,22 @@ const { title, subtitle, videoUrl, ctaText } = heroData.default;
 
 <script>
   // Pause video when not in viewport (performance optimization)
-  const video = document.querySelector('video');
+  const video = document.querySelector("#hero video") as HTMLVideoElement;
+
+  // Sound toggle functionality
+  const soundToggle = document.getElementById("hero-sound-toggle");
+  if (soundToggle && video) {
+    soundToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const iconMuted = soundToggle.querySelector(".icon-muted");
+      const iconUnmuted = soundToggle.querySelector(".icon-unmuted");
+
+      video.muted = !video.muted;
+      iconMuted?.classList.toggle("hidden", !video.muted);
+      iconUnmuted?.classList.toggle("hidden", video.muted);
+    });
+  }
+
   if (video) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -94,5 +232,51 @@ const { title, subtitle, videoUrl, ctaText } = heroData.default;
       });
     });
     observer.observe(video);
+  }
+
+  // Hide hero content after 4 seconds, show when video loops
+  const heroContent = document.getElementById("hero-content");
+  const heroSection = document.getElementById("hero");
+
+  if (heroContent && heroSection) {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (!prefersReducedMotion) {
+      // Function to hide content progressively
+      const hideContent = () => {
+        heroContent.classList.remove("showing", "hidden");
+        heroContent.classList.add("hiding");
+        // After animation ends, add hidden class
+        setTimeout(() => {
+          heroContent.classList.add("hidden");
+        }, 2000);
+      };
+
+      // Function to show content progressively
+      const showContent = () => {
+        heroContent.classList.remove("hiding", "hidden");
+        heroContent.classList.add("showing");
+      };
+
+      // Hide after 4 seconds
+      let hideTimeout = setTimeout(hideContent, 4000);
+
+      // Show when video loops (restarts)
+      let lastTime = 0;
+      if (video) {
+        video.addEventListener("timeupdate", () => {
+          // Detect loop: current time is near 0 but was previously higher
+          if (video.currentTime < 0.5 && lastTime > 1) {
+            showContent();
+            clearTimeout(hideTimeout);
+            hideTimeout = setTimeout(hideContent, 4000);
+          }
+          lastTime = video.currentTime;
+        });
+      }
+    }
   }
 </script>
