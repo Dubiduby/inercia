@@ -18,10 +18,10 @@ const { title, isOpen = false, backgroundImage } = Astro.props;
   open={isOpen}
 >
   <summary
-    class={`accordion-header cursor-pointer py-6 px-6 transition-colors flex justify-between items-center ${backgroundImage ? 'bg-cover bg-center has-bg-image' : 'hover:bg-gray-50 no-bg-image'}`}
+    class={`accordion-header cursor-pointer pt-20 pb-4 px-6 transition-colors flex justify-between items-end ${backgroundImage ? 'bg-cover bg-center has-bg-image' : 'hover:bg-gray-50 no-bg-image'}`}
     style={backgroundImage ? `background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url(${backgroundImage});` : ''}
   >
-    <h3 class={`text-lg font-semibold ${backgroundImage ? 'text-gray-800' : 'text-gray-900'}`}>{title}</h3>
+    <h3 class={`text-xl md:text-2xl font-semibold ${backgroundImage ? 'text-gray-800' : 'text-gray-900'}`}>{title}</h3>
     <svg
       class={`accordion-icon w-5 h-5 transition-transform duration-200 ${backgroundImage ? 'text-gray-800' : 'text-gray-500'}`}
       fill="none"

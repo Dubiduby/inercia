@@ -2,84 +2,38 @@
 /**
  * Structured Data (Schema.org JSON-LD) Component
  * Critical for SEO and rich search results
+ * Data is loaded from CMS (src/data/site.json)
  */
+import siteData from '../../data/site.json';
 
 const siteUrl = Astro.site?.toString() || 'https://inercia.com';
+const { title, description, email, whatsapp, social, seo } = siteData;
+
+// Build social media URLs array
+const sameAs = [
+  social?.facebook,
+  social?.instagram
+].filter(Boolean);
 
 // MusicGroup Schema - Core organizational schema
 const musicGroupSchema = {
   "@context": "https://schema.org",
   "@type": "MusicGroup",
   "@id": `${siteUrl}/#musicgroup`,
-  "name": "Inercia",
-  "genre": ["Wedding Music", "Event Entertainment", "Live Music"],
+  "name": title,
+  "genre": seo?.genres || ["Live Music", "Wedding Music", "Event Entertainment"],
   "url": siteUrl,
-  "description": "Professional music group specializing in weddings, corporate events, and private parties. Exceptional live entertainment for your special occasions.",
-  "sameAs": [
-    // Add social media URLs when available
-    // "https://facebook.com/inercia",
-    // "https://instagram.com/inercia"
-  ],
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "City", // Update with actual location
-    "addressRegion": "State", // Update with actual region
-    "addressCountry": "Country" // Update with actual country
+  "description": description,
+  "sameAs": sameAs.length > 0 ? sameAs : undefined,
+  "areaServed": {
+    "@type": "Country",
+    "name": seo?.areaServed || "España"
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+1-234-567-890", // Update with actual phone
+    "telephone": `+${whatsapp}`,
     "contactType": "bookings",
-    "email": "info@inercia.com" // Update with actual email
-  }
-};
-
-// Service Schemas - One for each service type
-const weddingServiceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "@id": `${siteUrl}/#service-wedding`,
-  "name": "Wedding Music Entertainment",
-  "serviceType": "Wedding Music Entertainment",
-  "description": "Live music performances for wedding ceremonies and receptions. Professional musicians creating the perfect atmosphere for your special day.",
-  "provider": {
-    "@id": `${siteUrl}/#musicgroup`
-  },
-  "areaServed": {
-    "@type": "State", // or GeoCircle for specific radius
-    "name": "Region" // Update with actual service area
-  }
-};
-
-const corporateServiceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "@id": `${siteUrl}/#service-corporate`,
-  "name": "Corporate Event Entertainment",
-  "serviceType": "Corporate Event Music",
-  "description": "Professional live music for corporate events, conferences, and business celebrations.",
-  "provider": {
-    "@id": `${siteUrl}/#musicgroup`
-  },
-  "areaServed": {
-    "@type": "State",
-    "name": "Region" // Update with actual service area
-  }
-};
-
-const privateServiceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "@id": `${siteUrl}/#service-private`,
-  "name": "Private Event Entertainment",
-  "serviceType": "Private Party Music",
-  "description": "Custom live music performances for private parties, celebrations, and special occasions.",
-  "provider": {
-    "@id": `${siteUrl}/#musicgroup`
-  },
-  "areaServed": {
-    "@type": "State",
-    "name": "Region" // Update with actual service area
+    "email": email
   }
 };
 
@@ -88,34 +42,40 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "@id": `${siteUrl}/#business`,
-  "name": "Inercia Music Group",
+  "name": title,
   "image": `${siteUrl}/og-image.jpg`,
   "url": siteUrl,
-  "telephone": "+1-234-567-890", // Update with actual phone
-  "priceRange": "$$",
+  "telephone": `+${whatsapp}`,
+  "email": email,
   "address": {
     "@type": "PostalAddress",
-    "addressLocality": "City", // Update with actual location
-    "addressRegion": "State",
-    "addressCountry": "Country"
+    "addressLocality": seo?.city || "Madrid",
+    "addressCountry": seo?.country || "ES"
   },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "09:00",
-      "closes": "18:00"
-    }
-  ]
+  "areaServed": {
+    "@type": "Country",
+    "name": seo?.areaServed || "España"
+  }
 };
 
-// Combine all schemas into a single array
+// Remove undefined values from objects
+function cleanSchema(obj: any): any {
+  if (Array.isArray(obj)) {
+    return obj.map(cleanSchema).filter(v => v !== undefined);
+  }
+  if (obj && typeof obj === 'object') {
+    return Object.fromEntries(
+      Object.entries(obj)
+        .filter(([_, v]) => v !== undefined)
+        .map(([k, v]) => [k, cleanSchema(v)])
+    );
+  }
+  return obj;
+}
+
 const schemas = [
-  musicGroupSchema,
-  weddingServiceSchema,
-  corporateServiceSchema,
-  privateServiceSchema,
-  localBusinessSchema
+  cleanSchema(musicGroupSchema),
+  cleanSchema(localBusinessSchema)
 ];
 ---
 
