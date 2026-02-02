@@ -4,6 +4,7 @@
  * Interactive accordion with video preview that changes on selection
  */
 import { useTranslations, type Language } from "../../i18n/utils";
+import { extractYouTubeId } from "../../utils/youtube";
 
 interface Props {
   lang?: Language;
@@ -11,17 +12,6 @@ interface Props {
 
 const { lang = "es" } = Astro.props;
 const t = useTranslations(lang);
-
-// Helper function to extract YouTube video ID from URL or return ID directly
-function extractYouTubeId(input: string): string {
-  if (!input) return "";
-  if (!/[\/\.]/.test(input)) return input;
-  const match = input.match(
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
-  );
-  if (match) return match[1];
-  return input;
-}
 
 // Load all services dynamically from folder
 const allServicesEs = import.meta.glob("../../data/services/es/*.json", {
