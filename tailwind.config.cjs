@@ -9,8 +9,8 @@ module.exports = {
         accent: '#3182ce',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Montserrat', 'sans-serif'],
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
+        display: ['Poppins', 'sans-serif'],
       },
     },
   },

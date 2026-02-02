@@ -3,9 +3,21 @@
   "description": "Professional live music for weddings, corporate events, and private parties",
   "email": "info@inercia.com",
   "whatsapp": "1234567890",
-  "backgroundImage": "/images/fondo-pagina.webp",
+  "backgroundImage": "/images/fondo-pagina4.webp",
   "social": {
     "facebook": "",
     "instagram": ""
+  },
+  "seo": {
+    "genres": [
+      "Pop",
+      "Rock",
+      "Jazz",
+      "Soul",
+      "Funk"
+    ],
+    "areaServed": "España",
+    "city": "Madrid",
+    "country": "ES"
   }
 }

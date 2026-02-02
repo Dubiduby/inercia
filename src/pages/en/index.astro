@@ -20,14 +20,21 @@ const backgroundImage = siteData.backgroundImage;
 
 <BaseLayout title={pageTitle} description={pageDescription} lang={lang}>
   <Hero lang={lang} />
-  <div
-    class="bg-no-repeat bg-cover bg-center"
-    style={backgroundImage ? `background-image: url('${backgroundImage}');` : ''}
-  >
+  {backgroundImage && (
+    <img
+      id="parallax-bg"
+      src={backgroundImage}
+      alt=""
+      class="fixed top-0 left-0 right-0 bottom-40 w-full object-cover -z-10 h-[180%]"
+      style="will-change: transform;"
+      aria-hidden="true"
+    />
+  )}
+  <div>
     <About lang={lang} />
     <Services lang={lang} />
     <Gallery lang={lang} />
     <Logos lang={lang} />
-    <Contact lang={lang} />
   </div>
+  <Contact lang={lang} />
 </BaseLayout>
