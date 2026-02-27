@@ -70,9 +70,9 @@ const layoutClasses = {
                 </h4>
               )}
               <!-- Description -->
-              <div class={`prose prose-sm max-w-none ${service.backgroundImage ? 'text-gray-800' : 'text-gray-700'}`}>
+              <div class={`${service.backgroundImage ? 'text-gray-800' : 'text-gray-700'}`}>
                 {service.description.split('\n\n').map((p: string) => (
-                  <p>{p}</p>
+                  <p class="mb-4 last:mb-0">{p}</p>
                 ))}
               </div>
 

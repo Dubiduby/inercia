@@ -113,7 +113,8 @@ collections:
     summary: "Order: {{order}} - {{alt}}"
     sortable_fields: ["order", "alt", "caption"]
     fields:
-      - { name: "image", label: "Imagen o Video", widget: "file", hint: "Formatos: WebP (recomendado), JPG o PNG para imágenes (máx. 500KB). MP4 para videos (máx. 5MB). Tamaño: 1200x800px. Optimiza imágenes en https://squoosh.app" }
+      - { name: "image", label: "Imagen o Video", widget: "file", required: false, hint: "Formatos: WebP (recomendado), JPG o PNG para imágenes (máx. 500KB). MP4 para videos (máx. 5MB). Tamaño: 1200x800px. Optimiza imágenes en https://squoosh.app" }
+      - { name: "youtubeUrl", label: "Video de YouTube (opcional)", widget: "string", required: false, hint: "URL completa del video de YouTube. Si se proporciona, se mostrará en lugar de la imagen/video subido" }
       - { name: "alt", label: "Texto alternativo (Alt Text)", widget: "string", hint: "Describe brevemente qué se ve en la imagen. Ej: 'Inercia tocando en boda en Hotel Ritz'. Esto ayuda a Google a indexar tus imágenes y mejora la accesibilidad para personas con discapacidad visual" }
       - { name: "caption", label: "Pie de foto", widget: "string", required: false, hint: "Texto opcional que aparece debajo de la imagen. Ej: 'Boda de María y Juan, 2024'" }
       - { name: "order", label: "Orden", widget: "number", value_type: "int", default: 1, hint: "Número para ordenar las imágenes. Las de número más bajo aparecen primero" }

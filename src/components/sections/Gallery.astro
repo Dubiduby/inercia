@@ -5,6 +5,7 @@
  */
 import { Image } from "astro:assets";
 import { useTranslations, type Language } from "../../i18n/utils";
+import { extractYouTubeId } from "../../utils/youtube";
 
 interface Props {
   lang?: Language;
@@ -35,9 +36,10 @@ const galleryImages = Array.from({ length: fixedGridSize }, (_, i) => {
     const item = (file as any).frontmatter;
     return {
       position,
-      src: item.image,
+      src: item.image || "",
       alt: item.alt,
       caption: item.caption || "",
+      youtubeVideoId: extractYouTubeId(item.youtubeUrl || ""),
     };
   }
 
@@ -47,13 +49,14 @@ const galleryImages = Array.from({ length: fixedGridSize }, (_, i) => {
     src: "/images/gallery/placeholder-1.jpg",
     alt: lang === "es" ? `Posición ${position}` : `Position ${position}`,
     caption: "",
+    youtubeVideoId: "",
   };
 });
 ---
 
 <section id="gallery" class="section-padding">
   <div class="container-custom">
-    <div class="text-center mb-12">
+    <div class="text-left mb-12">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
         {t("gallery.title")}
       </h2>
@@ -93,7 +96,16 @@ const galleryImages = Array.from({ length: fixedGridSize }, (_, i) => {
             <div
               class={`relative group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ${gridClasses}`}
             >
-              {isVideo(image.src) ? (
+              {image.youtubeVideoId ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${image.youtubeVideoId}?rel=0`}
+                  title={image.alt}
+                  class="w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  loading="lazy"
+                />
+              ) : isVideo(image.src) ? (
                 <div class="video-container w-full h-full">
                   <video
                     src={image.src}
@@ -152,12 +164,14 @@ const galleryImages = Array.from({ length: fixedGridSize }, (_, i) => {
                   height="600"
                 />
               )}
-              {/* Overlay with caption on hover */}
-              <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <p class="text-white text-center px-4 font-medium">
-                  {image.caption}
-                </p>
-              </div>
+              {/* Overlay with caption on hover - hidden for YouTube videos */}
+              {!image.youtubeVideoId && (
+                <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end">
+                  <p class="text-white text-right pb-3 pr-3 font-medium">
+                    {image.caption}
+                  </p>
+                </div>
+              )}
             </div>
           );
         })
