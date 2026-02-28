@@ -14,11 +14,11 @@ const { title, isOpen = false, backgroundImage } = Astro.props;
 ---
 
 <details
-  class="accordion rounded-lg shadow-lg overflow-hidden bg-white"
+  class="accordion rounded-lg shadow-lg bg-white"
   open={isOpen}
 >
   <summary
-    class={`accordion-header cursor-pointer pt-20 pb-4 px-6 transition-colors flex justify-between items-end ${backgroundImage ? 'bg-cover bg-center has-bg-image' : 'hover:bg-gray-50 no-bg-image'}`}
+    class={`accordion-header cursor-pointer pt-20 pb-4 px-6 transition-colors flex justify-between items-end rounded-t-lg overflow-hidden ${backgroundImage ? 'bg-cover bg-center has-bg-image' : 'hover:bg-gray-50 no-bg-image'}`}
     style={backgroundImage ? `background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url(${backgroundImage});` : ''}
   >
     <h3 class={`text-xl md:text-2xl font-semibold ${backgroundImage ? 'text-gray-800' : 'text-gray-900'}`}>{title}</h3>
@@ -31,10 +31,8 @@ const { title, isOpen = false, backgroundImage } = Astro.props;
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
   </summary>
-  <div class="accordion-content px-6 pb-4 bg-white text-gray-700">
-    <div class="prose prose-sm max-w-none">
-      <slot />
-    </div>
+  <div class="accordion-content px-6 pb-6 bg-white text-gray-700 rounded-b-lg">
+    <slot />
   </div>
 </details>
 

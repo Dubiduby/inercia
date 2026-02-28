@@ -9,13 +9,15 @@ interface Props {
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   class?: string;
+  style?: string;
 }
 
 const {
   href,
   variant = 'primary',
   size = 'md',
-  class: className = ''
+  class: className = '',
+  style = ''
 } = Astro.props;
 
 const baseClasses = 'inline-flex items-center justify-center font-semibold transition-all duration-200 rounded-lg';
@@ -36,11 +38,11 @@ const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} 
 ---
 
 {href ? (
-  <a href={href} class={classes}>
+  <a href={href} class={classes} style={style}>
     <slot />
   </a>
 ) : (
-  <button class={classes}>
+  <button class={classes} style={style}>
     <slot />
   </button>
 )}
