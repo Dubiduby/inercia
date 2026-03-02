@@ -111,10 +111,9 @@ const services = Object.values(allServices)
               <div class="card-content-inner">
                 <h3 class="card-title">{service.subtitle}</h3>
 
-                <p class="card-description">
-                  {service.description.replace(/\n/g, " ").slice(0, 200)}
-                  {service.description.length > 200 ? "..." : ""}
-                </p>
+                {service.description.split('\n\n').map((p: string) => (
+                  <p class="card-description">{p}</p>
+                ))}
 
                 <a href="#contact" class="card-button">
                   {lang === "es" ? "Más información" : "Learn more"}
