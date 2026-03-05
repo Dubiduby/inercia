@@ -1,5 +1,17 @@
 {
-  "title": "Wedding Ceremonies & Receptions",
-  "description": "Make your special day even more memorable with live music that captures the essence of your love story. We perform during ceremonies, cocktail hours, and receptions, creating the perfect atmosphere for every moment.\n\nOur extensive repertoire includes classical pieces, romantic ballads, and contemporary favorites that can be customized to match your wedding theme and personal preferences.",
-  "order": 1
+  "title": "Workshops for work teams and Team Building",
+  "description": "\nIn our Team Building workshops, we experience the concept of *harmony* creating a space of trust where, through the body and voice, we dare to leave our comfort zone to integrate key elements such as *listening*, * creativity* or *delegation*.",
+  "tags": [
+    "Teamwork",
+    "Creativity",
+    "Learning",
+    "Soft Skills",
+    "Fun",
+    "Live Music"
+  ],
+  "youtubeVideoId": "d076d5o62H8",
+  "layout": "center",
+  "backgroundImage": "",
+  "order": 2,
+  "subtitle": "Inspire your team:"
 }

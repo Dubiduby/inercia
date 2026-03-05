@@ -5,6 +5,7 @@
  */
 import Accordion from '../ui/Accordion.astro';
 import { useTranslations, type Language } from '../../i18n/utils';
+import { extractYouTubeId } from '../../utils/youtube';
 
 interface Props {
   lang?: Language;
@@ -13,44 +14,96 @@ interface Props {
 const { lang = 'es' } = Astro.props;
 const t = useTranslations(lang);
 
-// Load services data from CMS
-const weddingsData = await import(`../../data/services/${lang}/weddings.json`);
-const corporateData = await import(`../../data/services/${lang}/corporate.json`);
-const privateData = await import(`../../data/services/${lang}/private.json`);
+// Load all services dynamically from folder
+const allServicesEs = import.meta.glob('../../data/services/es/*.json', { eager: true });
+const allServicesEn = import.meta.glob('../../data/services/en/*.json', { eager: true });
+
+const allServices = lang === 'es' ? allServicesEs : allServicesEn;
 
 // Combine and sort services by order
-const services = [
-  weddingsData.default,
-  corporateData.default,
-  privateData.default
-].sort((a, b) => a.order - b.order).map(service => ({
-  title: service.title,
-  content: service.description.split('\n\n').map((p: string) => `<p>${p}</p>`).join('\n      ')
-}));
+const services = Object.values(allServices)
+  .map((module: any) => module.default)
+  .sort((a, b) => a.order - b.order)
+  .map(service => ({
+    title: service.title,
+    subtitle: service.subtitle || '',
+    description: service.description,
+    tags: service.tags || [],
+    youtubeVideoId: extractYouTubeId(service.youtubeVideoId || ''),
+    verticalVideo: service.verticalVideo || false,
+    mobileFrame: service.mobileFrame || false,
+    layout: service.layout || 'center',
+    backgroundImage: service.backgroundImage || ''
+  }));
+
+// Layout classes based on service layout setting
+const layoutClasses = {
+  spread: 'flex flex-col md:flex-row gap-6 items-start justify-between',
+  center: 'flex flex-col md:flex-row gap-10 items-stretch justify-center',
+  right: 'flex flex-col md:flex-row gap-10 items-stretch justify-between'
+};
 ---
 
-<section id="services" class="section-padding bg-gray-50">
+<section id="services" class="section-padding">
   <div class="container-custom">
-    <div class="max-w-4xl mx-auto">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          {t('services.title')}
-        </h2>
-        <p class="text-xl text-gray-600">
-          {lang === 'es'
-            ? 'Música en vivo profesional adaptada a tu evento'
-            : 'Professional live music tailored to your event'
-          }
-        </p>
-      </div>
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-[#2F261B] mb-4">
+        {t('services.title')}
+      </h2>
+      <p class="text-xl text-[#483A28]">
+        {lang === 'es'
+          ? 'Música en vivo profesional adaptada a tu evento'
+          : 'Professional live music tailored to your event'
+        }
+      </p>
+    </div>
 
-      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        {services.map((service, index) => (
-          <Accordion title={service.title} isOpen={index === 0}>
-            <div set:html={service.content} />
-          </Accordion>
-        ))}
-      </div>
+    <div class="space-y-4">
+      {services.map((service, index) => (
+        <Accordion title={service.title} isOpen={index === 0} backgroundImage={service.backgroundImage}>
+          <div class="space-y-6 mt-4">
+            <!-- Subtitle -->
+            {service.subtitle && (
+              <h4 class="text-lg font-semibold text-[#2F261B]">
+                {service.subtitle}
+              </h4>
+            )}
+            <!-- Description -->
+            <div class="text-[#483A28]">
+              {service.description.split('\n\n').map((p: string) => (
+                <p class="mb-4 last:mb-0">{p}</p>
+              ))}
+            </div>
+
+            <!-- Tags and Video -->
+            <div class={`w-full ${index === 1 ? 'flex flex-col items-center' : layoutClasses[service.layout as keyof typeof layoutClasses]}`}>
+              <!-- Tags List (hidden for second accordion) -->
+              {index !== 1 && (
+                <div class="grid grid-cols-2 gap-2 justify-items-start">
+                  {service.tags.map((tag: string) => (
+                    <span class="px-4 py-2 text-sm font-medium rounded-full text-white bg-[#2F261B] w-fit">{tag}</span>
+                  ))}
+                </div>
+              )}
+
+              <!-- YouTube Video -->
+              {service.youtubeVideoId && (
+                <div class={`${service.mobileFrame ? 'bg-gray-900 p-2 rounded-[2rem] shadow-xl' : ''} ${index === 1 ? 'aspect-video w-full' : service.verticalVideo ? 'aspect-[9/16] w-full md:w-[35%] self-center' : 'aspect-video w-full md:w-[50%]'}`}>
+                  <div class={`rounded-lg overflow-hidden shadow-md ${service.mobileFrame ? 'rounded-[1.5rem]' : ''} h-full`}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${service.youtubeVideoId}`}
+                      title={service.title}
+                      class="w-full h-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                    ></iframe>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </Accordion>
+      ))}
     </div>
   </div>
 </section>

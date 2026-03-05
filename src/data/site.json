@@ -1,10 +1,24 @@
 {
   "title": "Inercia Music Group",
   "description": "Professional live music for weddings, corporate events, and private parties",
-  "email": "info@inercia.com",
-  "whatsapp": "1234567890",
+  "email": "proyectoinerciamusic@gmail.com",
+  "whatsapp": "34680500706",
+  "backgroundImage": "/images/fondo-pagina4.webp",
   "social": {
     "facebook": "",
-    "instagram": ""
+    "instagram": "https://www.instagram.com/proyecto.inercia/",
+    "instagramHandle": "@proyecto.inercia"
+  },
+  "seo": {
+    "genres": [
+      "Pop",
+      "Rock",
+      "Jazz",
+      "Soul",
+      "Funk"
+    ],
+    "areaServed": "España",
+    "city": "Madrid",
+    "country": "ES"
   }
 }

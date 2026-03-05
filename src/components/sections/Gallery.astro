@@ -5,6 +5,7 @@
  */
 import { Image } from "astro:assets";
 import { useTranslations, type Language } from "../../i18n/utils";
+import { extractYouTubeId } from "../../utils/youtube";
 
 interface Props {
   lang?: Language;
@@ -15,8 +16,8 @@ const t = useTranslations(lang);
 
 // Helper to detect if file is a video
 const isVideo = (src: string) => {
-  const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
-  return videoExtensions.some(ext => src.toLowerCase().endsWith(ext));
+  const videoExtensions = [".mp4", ".webm", ".ogg", ".mov"];
+  return videoExtensions.some((ext) => src.toLowerCase().endsWith(ext));
 };
 
 // Load gallery images from CMS (dynamically load all Markdown files)
@@ -24,91 +25,42 @@ const galleryModules = import.meta.glob("../../data/gallery/*.md", {
   eager: true,
 });
 const galleryFiles = Object.values(galleryModules);
-const galleryImages =
-  galleryFiles.length > 0
-    ? galleryFiles
-        .map((file: any) => file.frontmatter)
-        .sort((a: any, b: any) => a.order - b.order)
-        .map((item: any) => ({
-          src: item.image,
-          alt: item.alt,
-          caption: item.caption || "",
-        }))
-    : // Fallback to placeholder data if no CMS data exists
-      lang === "es"
-      ? [
-          {
-            src: "/images/gallery/placeholder-1.jpg",
-            alt: "Inercia tocando en una ceremonia de boda elegante",
-            caption: "Ceremonia de Boda",
-          },
-          {
-            src: "/images/gallery/placeholder-2.jpg",
-            alt: "Banda en vivo tocando en evento corporativo",
-            caption: "Evento Corporativo",
-          },
-          {
-            src: "/images/gallery/placeholder-3.jpg",
-            alt: "Músicos de Inercia tocando en recepción al aire libre",
-            caption: "Recepción al Aire Libre",
-          },
-          {
-            src: "/images/gallery/placeholder-4.jpg",
-            alt: "Cuarteto de cuerdas en fiesta privada íntima",
-            caption: "Fiesta Privada",
-          },
-          {
-            src: "/images/gallery/placeholder-5.jpg",
-            alt: "Banda tocando en escenario en celebración",
-            caption: "Celebración Especial",
-          },
-          {
-            src: "/images/gallery/placeholder-6.jpg",
-            alt: "Ensamble de Inercia en el lugar",
-            caption: "Configuración Profesional",
-          },
-        ]
-      : [
-          {
-            src: "/images/gallery/placeholder-1.jpg",
-            alt: "Inercia performing at an elegant wedding ceremony",
-            caption: "Wedding Ceremony Performance",
-          },
-          {
-            src: "/images/gallery/placeholder-2.jpg",
-            alt: "Live band performing at corporate event",
-            caption: "Corporate Event Entertainment",
-          },
-          {
-            src: "/images/gallery/placeholder-3.jpg",
-            alt: "Inercia musicians playing at outdoor reception",
-            caption: "Outdoor Reception",
-          },
-          {
-            src: "/images/gallery/placeholder-4.jpg",
-            alt: "String quartet at intimate private party",
-            caption: "Private Party",
-          },
-          {
-            src: "/images/gallery/placeholder-5.jpg",
-            alt: "Band performing on stage at celebration",
-            caption: "Special Celebration",
-          },
-          {
-            src: "/images/gallery/placeholder-6.jpg",
-            alt: "Inercia ensemble at venue",
-            caption: "Professional Setup",
-          },
-        ];
+
+// Create fixed grid with 12 positions based on order field
+const fixedGridSize = 12;
+const galleryImages = Array.from({ length: fixedGridSize }, (_, i) => {
+  const position = i + 1;
+  const file = galleryFiles.find((f: any) => f.frontmatter?.order === position);
+
+  if (file) {
+    const item = (file as any).frontmatter;
+    return {
+      position,
+      src: item.image || "",
+      alt: item.alt,
+      caption: item.caption || "",
+      youtubeVideoId: extractYouTubeId(item.youtubeUrl || ""),
+    };
+  }
+
+  // Placeholder for empty positions
+  return {
+    position,
+    src: "/images/gallery/placeholder-1.jpg",
+    alt: lang === "es" ? `Posición ${position}` : `Position ${position}`,
+    caption: "",
+    youtubeVideoId: "",
+  };
+});
 ---
 
-<section id="gallery" class="section-padding bg-white">
+<section id="gallery" class="section-padding">
   <div class="container-custom">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+    <div class="text-left mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-[#2F261B] mb-4">
         {t("gallery.title")}
       </h2>
-      <p class="text-xl text-gray-600">
+      <p class="text-xl text-[#483A28]">
         {
           lang === "es"
             ? "Momentos de nuestras actuaciones"
@@ -117,59 +69,119 @@ const galleryImages =
       </p>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div
+      class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-3 lg:gap-4 xl:gap-5 auto-rows-[120px] md:auto-rows-[100px] lg:auto-rows-[140px] xl:auto-rows-[180px]"
+    >
       {
-        galleryImages.map((image, index) => (
-          <div class="relative group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 aspect-square">
-            {isVideo(image.src) ? (
-              <div class="video-container w-full h-full">
-                <video
-                  src={image.src}
-                  autoplay
-                  muted
-                  loop
-                  playsinline
-                  class="gallery-video w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+        galleryImages.map((image, index) => {
+          // Define fixed grid sizes for each position (1-12) with responsive classes
+          // Mobile (2 cols) → Tablet (4 cols) → Desktop (4 cols) → XL (4 cols)
+          const gridClasses =
+            {
+              1: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1 xl:col-span-1 xl:row-span-1",
+              2: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1 xl:col-span-1 xl:row-span-1",
+              3: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1 xl:col-span-1 xl:row-span-1",
+              4: "col-span-1 row-span-2 md:col-span-1 md:row-span-2 lg:col-span-1 lg:row-span-2 xl:col-span-1 xl:row-span-2",
+              5: "col-span-1 row-span-1 md:col-span-1 md:row-span-2 lg:col-span-1 lg:row-span-2 xl:col-span-1 xl:row-span-2",
+              6: "col-span-2 row-span-2 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2 xl:col-span-2 xl:row-span-2",
+              7: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1 xl:col-span-1 xl:row-span-1",
+              8: "col-span-1 row-span-1 md:col-span-2 md:row-span-1 lg:col-span-2 lg:row-span-1 xl:col-span-2 xl:row-span-1",
+              9: "col-span-2 row-span-2 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2 xl:col-span-2 xl:row-span-2",
+              10: "col-span-2 row-span-1 md:col-span-2 md:row-span-1 lg:col-span-2 lg:row-span-1 xl:col-span-2 xl:row-span-1",
+              11: "col-span-2 row-span-2 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2 xl:col-span-2 xl:row-span-2",
+              12: "col-span-2 row-span-2 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2 xl:col-span-2 xl:row-span-2",
+            }[image.position] || "col-span-1 row-span-1";
+
+          return (
+            <div
+              class={`relative group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ${gridClasses}`}
+            >
+              {image.youtubeVideoId ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${image.youtubeVideoId}?rel=0`}
+                  title={image.alt}
+                  class="w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  loading="lazy"
                 />
-                <button
-                  type="button"
-                  class="sound-toggle absolute bottom-3 right-3 z-10 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  aria-label="Toggle sound"
-                >
-                  <svg class="icon-muted w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
-                  </svg>
-                  <svg class="icon-unmuted w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                  </svg>
-                </button>
-              </div>
-            ) : (
-              <img
-                src={image.src}
-                alt={image.alt}
-                loading={index < 4 ? "eager" : "lazy"}
-                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                width="600"
-                height="600"
-              />
-            )}
-            {/* Overlay with caption on hover */}
-            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <p class="text-white text-center px-4 font-medium">
-                {image.caption}
-              </p>
+              ) : isVideo(image.src) ? (
+                <div class="video-container w-full h-full">
+                  <video
+                    src={image.src}
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="gallery-video w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <button
+                    type="button"
+                    class="sound-toggle absolute bottom-3 right-3 z-10 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    aria-label="Toggle sound"
+                  >
+                    <svg
+                      class="icon-muted w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"
+                      />
+                    </svg>
+                    <svg
+                      class="icon-unmuted w-5 h-5 hidden"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              ) : (
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  loading={index < 4 ? "eager" : "lazy"}
+                  class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  width="600"
+                  height="600"
+                />
+              )}
+              {/* Overlay with caption on hover - hidden for YouTube videos */}
+              {!image.youtubeVideoId && (
+                <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end">
+                  <p class="text-white text-right pb-3 pr-3 font-medium">
+                    {image.caption}
+                  </p>
+                </div>
+              )}
             </div>
-          </div>
-        ))
+          );
+        })
       }
     </div>
 
     {
       galleryFiles.length === 0 && (
         <div class="text-center mt-8">
-          <p class="text-gray-600 italic">
+          <p class="text-gray-300 italic">
             {lang === "es"
               ? "* Reemplazar imágenes placeholder con tus fotos reales de eventos"
               : "* Replace placeholder images with your actual event photos"}
@@ -192,21 +204,21 @@ const galleryImages =
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const soundToggles = document.querySelectorAll('.sound-toggle');
+  document.addEventListener("DOMContentLoaded", () => {
+    const soundToggles = document.querySelectorAll(".sound-toggle");
 
     soundToggles.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener("click", (e) => {
         e.stopPropagation();
-        const container = btn.closest('.video-container');
-        const video = container?.querySelector('video') as HTMLVideoElement;
-        const iconMuted = btn.querySelector('.icon-muted');
-        const iconUnmuted = btn.querySelector('.icon-unmuted');
+        const container = btn.closest(".video-container");
+        const video = container?.querySelector("video") as HTMLVideoElement;
+        const iconMuted = btn.querySelector(".icon-muted");
+        const iconUnmuted = btn.querySelector(".icon-unmuted");
 
         if (video) {
           video.muted = !video.muted;
-          iconMuted?.classList.toggle('hidden', !video.muted);
-          iconUnmuted?.classList.toggle('hidden', video.muted);
+          iconMuted?.classList.toggle("hidden", !video.muted);
+          iconUnmuted?.classList.toggle("hidden", video.muted);
         }
       });
     });

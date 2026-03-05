@@ -1,7 +1,7 @@
 ---
 /**
  * About Section
- * Introduction paragraph about the music group
+ * Introduction paragraph with scroll-reveal text effect
  */
 import type { Language } from '../../i18n/utils';
 
@@ -14,19 +14,142 @@ const { lang = 'es' } = Astro.props;
 // Load about data from CMS
 const aboutData = await import(`../../data/about/${lang}.json`);
 const { title, content } = aboutData.default;
+
+// Split content into paragraphs, then words for the reveal effect
+const paragraphs = content.split(/\n\n+/).filter((p: string) => p.trim());
+let wordIndex = 0;
 ---
 
-<section id="about" class="section-padding bg-white">
+<section id="about" class="about-section">
   <div class="container-custom">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-        {title}
-      </h2>
-      <div class="prose prose-lg mx-auto text-gray-700">
-        {content.split('\n\n').map((paragraph: string) => (
-          <p class="mb-4">{paragraph.trim()}</p>
-        ))}
+    <div class="about-content">
+      <h2 class="visually-hidden">{title}</h2>
+      <div class="reveal-text" id="reveal-text">
+        {paragraphs.map((paragraph: string) => {
+          const words = paragraph.split(' ').filter((w: string) => w.trim());
+          return (
+            <p class="reveal-paragraph">
+              {words.map((word: string) => {
+                const currentIndex = wordIndex++;
+                return <span class="word" style={`--word-index: ${currentIndex}`}>{word} </span>;
+              })}
+            </p>
+          );
+        })}
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .about-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 0;
+  }
+
+  .about-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .reveal-text {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  .reveal-paragraph {
+    margin: 0 0 1.5em 0;
+  }
+
+  .reveal-paragraph:last-child {
+    margin-bottom: 0;
+  }
+
+  .word {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.15);
+    transition: color 0.3s ease;
+    margin-right: 0.18em;
+  }
+
+  .word.revealed {
+    color: rgba(255, 255, 255, 1);
+  }
+</style>
+
+<script>
+  function initScrollReveal() {
+    const revealText = document.getElementById('reveal-text');
+    if (!revealText) return;
+
+    const words = revealText.querySelectorAll('.word');
+    const totalWords = words.length;
+
+    function updateReveal() {
+      const section = revealText.closest('.about-section');
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const sectionHeight = section.offsetHeight;
+      const windowHeight = window.innerHeight;
+
+      // Calculate scroll progress within the section
+      // Start revealing when section enters viewport, complete when section is about to leave
+      const scrollStart = windowHeight;
+      const scrollEnd = -sectionHeight + windowHeight * 0.5;
+      const scrollRange = scrollStart - scrollEnd;
+      const currentPosition = rect.top;
+
+      let progress = (scrollStart - currentPosition) / scrollRange;
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Calculate how many words should be revealed
+      const wordsToReveal = Math.floor(progress * totalWords);
+
+      words.forEach((word, index) => {
+        if (index < wordsToReveal) {
+          word.classList.add('revealed');
+        } else {
+          word.classList.remove('revealed');
+        }
+      });
+    }
+
+    // Initial check
+    updateReveal();
+
+    // Update on scroll
+    window.addEventListener('scroll', updateReveal, { passive: true });
+
+    // Cleanup on page navigation (for Astro)
+    document.addEventListener('astro:before-swap', () => {
+      window.removeEventListener('scroll', updateReveal);
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollReveal);
+  } else {
+    initScrollReveal();
+  }
+
+  // Re-initialize on Astro page navigation
+  document.addEventListener('astro:page-load', initScrollReveal);
+</script>

@@ -3,24 +3,41 @@
  * Landing Page - Spanish
  * Main homepage for Inercia Music Group
  */
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/sections/Hero.astro';
-import About from '../components/sections/About.astro';
-import Services from '../components/sections/Services.astro';
-import Gallery from '../components/sections/Gallery.astro';
-import Logos from '../components/sections/Logos.astro';
-import Contact from '../components/sections/Contact.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/sections/Hero.astro";
+import About from "../components/sections/About.astro";
+import ServicesShowcase from "../components/sections/ServicesShowcase.astro";
+import Gallery from "../components/sections/Gallery.astro";
+import Logos from "../components/sections/Logos.astro";
+import Contact from "../components/sections/Contact.astro";
+import siteData from "../data/site.json";
 
-const lang = 'es';
+const lang = "es";
 const pageTitle = "Inercia | Músicos Profesionales para Bodas y Eventos";
-const pageDescription = "Música en vivo excepcional para bodas, eventos corporativos y fiestas privadas. Músicos profesionales especializados en crear momentos inolvidables para tus ocasiones especiales.";
+const pageDescription =
+  "Música en vivo excepcional para bodas, eventos corporativos y fiestas privadas. Músicos profesionales especializados en crear momentos inolvidables para tus ocasiones especiales.";
+const backgroundImage = siteData.backgroundImage;
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} lang={lang}>
   <Hero lang={lang} />
-  <About lang={lang} />
-  <Services lang={lang} />
-  <Gallery lang={lang} />
-  <Logos lang={lang} />
-  <Contact lang={lang} />
+  {
+    backgroundImage && (
+      <img
+        id="parallax-bg"
+        src={backgroundImage}
+        alt=""
+        class="fixed top-0 w-full object-cover -z-10 h-[150%] overflow-visible opacity-70"
+        style="will-change: transform;"
+        aria-hidden="true"
+      />
+    )
+  }
+  <div>
+    <About lang={lang} />
+    <ServicesShowcase lang={lang} />
+    <Gallery lang={lang} />
+    <Logos lang={lang} />
+    <Contact lang={lang} />
+  </div>
 </BaseLayout>

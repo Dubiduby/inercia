@@ -1,5 +1,12 @@
 {
-  "title": "Corporate Events & Conferences",
-  "description": "Elevate your corporate gatherings with professional live entertainment. From elegant background music during networking sessions to energetic performances for company celebrations, we adapt our style to suit your business needs.\n\nWe understand the importance of creating the right ambiance for your corporate image and can provide music that enhances your event without overpowering conversations or presentations.",
-  "order": 2
+  "title": " Cover band: concerts for weddings, private parties and corporate events",
+  "description": "Have a great time creating unforgettable moments where your people let themselves go, get excited and, if the occasion demands it, dance as if there were no tomorrow. We offer duet or trio cover concerts with customizable repertoire (rock, pop, rumba and much more), and the option to rent our sound equipment.",
+  "tags": [
+    "Toda España  UE  Bodas  Fiestas  Cumples  Eventos  Fiestas del Pueblo  Equipo de sonido propio"
+  ],
+  "youtubeVideoId": "https://www.youtube.com/watch?v=KYtQ6_Ek44o",
+  "layout": "spread",
+  "backgroundImage": "/images/banner.png",
+  "order": 1,
+  "subtitle": "Two crazy people, one goal:"
 }

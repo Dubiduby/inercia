@@ -1,5 +1,17 @@
 {
-  "title": "Ceremonias y Recepciones de Boda",
-  "description": "Haz que tu día especial sea aún más memorable con música en vivo que captura la esencia de tu historia de amor. Tocamos durante ceremonias, cócteles y recepciones, creando la atmósfera perfecta para cada momento.\n\nNuestro extenso repertorio incluye piezas clásicas, baladas románticas y favoritos contemporáneos que se pueden personalizar para coincidir con el tema de tu boda y preferencias personales.",
-  "order": 1
+  "title": "Talleres para equipos de trabajo y Team Building",
+  "description": "\nEn nuestros talleres de Team Building, experienciamos el concepto de *armonía* creando un espacio de confianza donde, a través del cuerpo y la voz, nos atrevemos a salir de nuestra zona de confort para integrar elementos clave como la *escucha*, la *creatividad* o la *delegación* .",
+  "tags": [
+    "Trabajo en equipo",
+    "Creatividad",
+    "Aprendizaje",
+    "Soft Skills",
+    "Diversión",
+    "Música en vivo"
+  ],
+  "youtubeVideoId": "d076d5o62H8",
+  "layout": "center",
+  "backgroundImage": "",
+  "order": 2,
+  "subtitle": "Inspira a tu equipo:"
 }

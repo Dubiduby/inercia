@@ -1,5 +1,18 @@
 {
-  "title": "Private Parties & Celebrations",
-  "description": "Transform your private event into an extraordinary celebration with custom musical performances. Whether it's a birthday party, anniversary celebration, or intimate gathering, we bring energy and sophistication to your special occasion.\n\nOur flexible approach means we can perform acoustic sets for intimate venues or full band arrangements for larger celebrations, always maintaining the highest level of professionalism and musical excellence.",
-  "order": 3
+  "verticalVideo": true,
+  "layout": "spread",
+  "backgroundImage": "/images/image8.png",
+  "order": 3,
+  "youtubeVideoId": "https://www.youtube.com/watch?v=BN2oKvl_cJQ",
+  "subtitle": "Do you have a crazy idea?",
+  "title": "Performances",
+  "tags": [
+    "All Spain",
+    "EU",
+    "Parties",
+    "Birthdays",
+    "Town Festivals",
+    "Own sound equipment"
+  ],
+  "description": "If the answer is yes, contact us and we will shape it. We can't resist a good surprise. Whether it's a \"Mayu maná\" style mini-show or an \"a cappella\" choir making your favorite song."
 }

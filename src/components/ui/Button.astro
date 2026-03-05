@@ -9,19 +9,25 @@ interface Props {
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   class?: string;
+  style?: string;
+  target?: string;
+  rel?: string;
 }
 
 const {
   href,
   variant = 'primary',
   size = 'md',
-  class: className = ''
+  class: className = '',
+  style = '',
+  target,
+  rel
 } = Astro.props;
 
 const baseClasses = 'inline-flex items-center justify-center font-semibold transition-all duration-200 rounded-lg';
 
 const variantClasses = {
-  primary: 'bg-accent text-white hover:bg-blue-700 shadow-md hover:shadow-lg',
+  primary: 'bg-[#dbc7b2] text-gray-900 hover:bg-[#c9b5a0] shadow-md hover:shadow-lg',
   secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300',
   outline: 'border-2 border-accent text-accent hover:bg-accent hover:text-white'
 };
@@ -36,11 +42,11 @@ const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} 
 ---
 
 {href ? (
-  <a href={href} class={classes}>
+  <a href={href} class={classes} style={style} target={target} rel={rel}>
     <slot />
   </a>
 ) : (
-  <button class={classes}>
+  <button class={classes} style={style}>
     <slot />
   </button>
 )}

@@ -6,21 +6,35 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/sections/Hero.astro';
 import About from '../../components/sections/About.astro';
-import Services from '../../components/sections/Services.astro';
+import ServicesShowcase from '../../components/sections/ServicesShowcase.astro';
 import Gallery from '../../components/sections/Gallery.astro';
 import Logos from '../../components/sections/Logos.astro';
 import Contact from '../../components/sections/Contact.astro';
+import siteData from '../../data/site.json';
 
 const lang = 'en';
 const pageTitle = "Inercia | Professional Wedding & Event Musicians";
 const pageDescription = "Exceptional live music for weddings, corporate events, and private parties. Professional musicians specializing in creating unforgettable moments for your special occasions.";
+const backgroundImage = siteData.backgroundImage;
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} lang={lang}>
   <Hero lang={lang} />
-  <About lang={lang} />
-  <Services lang={lang} />
-  <Gallery lang={lang} />
-  <Logos lang={lang} />
+  {backgroundImage && (
+    <img
+      id="parallax-bg"
+      src={backgroundImage}
+      alt=""
+      class="fixed top-0 left-0 right-0 bottom-40 w-full object-cover -z-10 h-[180%]"
+      style="will-change: transform;"
+      aria-hidden="true"
+    />
+  )}
+  <div>
+    <About lang={lang} />
+    <ServicesShowcase lang={lang} />
+    <Gallery lang={lang} />
+    <Logos lang={lang} />
+  </div>
   <Contact lang={lang} />
 </BaseLayout>
