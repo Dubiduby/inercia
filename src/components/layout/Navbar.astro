@@ -98,7 +98,7 @@ const alternatePath = isEnglish
         <!-- Language Selector (Mobile) -->
         <a
           href={alternatePath}
-          class="px-4 py-2 text-center text-sm font-semibold rounded-lg bg-gray-100 hover:bg-accent hover:text-white transition-colors"
+          class="px-4 py-2 text-center text-sm font-semibold rounded-lg bg-[#F0EBE3] text-[#2F261B] hover:bg-[#483A28] hover:text-white transition-colors"
           aria-label={`Switch to ${alternateLang === "en" ? "English" : "Español"}`}
         >
           {alternateLang === "en" ? "English" : "Español"}
@@ -111,17 +111,27 @@ const alternatePath = isEnglish
 <style>
   /* Estado inicial: transparente con texto blanco */
   .nav-link {
-    @apply text-white hover:text-gray-200 font-medium;
-    transition: color 500ms ease-in-out;
+    @apply text-white font-medium;
+    transition: color 500ms ease-in-out, transform 300ms ease-in-out;
+  }
+
+  .nav-link:hover {
+    @apply text-gray-200;
   }
 
   /* Estado con scroll: fondo sólido */
   .navbar-scrolled {
-    @apply bg-white/95 backdrop-blur-sm shadow-md;
+    background-color: #F9F6F1;
+    @apply backdrop-blur-sm shadow-md;
   }
 
   .navbar-scrolled .nav-link {
-    @apply text-gray-700 hover:text-accent;
+    color: #483A28;
+  }
+
+  .navbar-scrolled .nav-link:hover {
+    color: #3d3325;
+    transform: translateY(-2px);
   }
 
   /* Logos con transición de opacidad */
@@ -172,16 +182,28 @@ const alternatePath = isEnglish
   }
 
   .navbar-scrolled .lang-selector {
-    @apply bg-gray-100 text-gray-700 hover:bg-accent hover:text-white;
+    @apply hover:text-white;
+    background-color: #F0EBE3;
+    color: #2F261B;
+  }
+
+  .navbar-scrolled .lang-selector:hover {
+    background-color: #483A28;
   }
 
   /* Menú mobile siempre con fondo sólido para legibilidad */
   #mobile-menu {
-    @apply bg-white/95 backdrop-blur-sm;
+    background-color: #F9F6F1;
+    @apply backdrop-blur-sm;
   }
 
   #mobile-menu .nav-link {
-    @apply text-gray-700 hover:text-accent;
+    color: #483A28;
+  }
+
+  #mobile-menu .nav-link:hover {
+    color: #3d3325;
+    transform: translateY(-2px);
   }
 </style>
 

@@ -48,10 +48,10 @@ const layoutClasses = {
   <div class="container-custom">
     <div class="max-w-5xl mx-auto">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-[#2F261B] mb-4">
           {t('services.title')}
         </h2>
-        <p class="text-xl text-gray-600">
+        <p class="text-xl text-[#483A28]">
           {lang === 'es'
             ? 'Música en vivo profesional adaptada a tu evento'
             : 'Professional live music tailored to your event'
@@ -65,12 +65,12 @@ const layoutClasses = {
             <div class="space-y-6 mt-4">
               <!-- Subtitle -->
               {service.subtitle && (
-                <h4 class={`text-lg font-semibold ${service.backgroundImage ? 'text-gray-800' : 'text-gray-700'}`}>
+                <h4 class="text-lg font-semibold text-[#2F261B]">
                   {service.subtitle}
                 </h4>
               )}
               <!-- Description -->
-              <div class={`${service.backgroundImage ? 'text-gray-800' : 'text-gray-700'}`}>
+              <div class="text-[#483A28]">
                 {service.description.split('\n\n').map((p: string) => (
                   <p class="mb-4 last:mb-0">{p}</p>
                 ))}
@@ -82,7 +82,7 @@ const layoutClasses = {
                 {index !== 1 && (
                   <div class="grid grid-cols-2 gap-2 justify-items-start">
                     {service.tags.map((tag: string) => (
-                      <span class="px-4 py-2 text-sm font-medium rounded-full text-gray-800 bg-[#dbc7b2] w-fit">{tag}</span>
+                      <span class="px-4 py-2 text-sm font-medium rounded-full text-white bg-[#2F261B] w-fit">{tag}</span>
                     ))}
                   </div>
                 )}

@@ -42,7 +42,7 @@ const services = Object.values(allServices)
 <section id="services-showcase" class="services-showcase">
   <div class="max-w-[1400px] mx-auto px-4 lg:px-8">
     <h2
-      class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12 text-right"
+      class="text-3xl md:text-4xl font-bold text-[#2F261B] mb-8 md:mb-12 text-right"
     >
       {t("services.title")}
     </h2>
@@ -188,14 +188,12 @@ const services = Object.values(allServices)
     .video-side {
       position: sticky;
       top: 6rem;
-      height: auto;
-      max-height: 70vh;
-      aspect-ratio: 16/10;
+      aspect-ratio: unset;
+      max-height: none;
     }
 
     .video-side:has(.video-wrapper.vertical.active) {
       max-height: none;
-      height: 85vh;
       aspect-ratio: auto;
       display: flex;
       justify-content: center;
@@ -290,7 +288,6 @@ const services = Object.values(allServices)
   @media (min-width: 1024px) {
     .services-container.vertical-active {
       grid-template-columns: 2fr 3fr;
-      align-items: start;
     }
   }
 
@@ -313,7 +310,7 @@ const services = Object.values(allServices)
   }
 
   .service-card {
-    background: rgba(255, 255, 255, 0.8);
+    background: #F9F6F1;
     backdrop-filter: blur(10px);
     border-radius: 0.5rem;
     padding: 1.5rem 2rem;
@@ -323,7 +320,7 @@ const services = Object.values(allServices)
   }
 
   .service-card:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: #F0EBE3;
   }
 
   .card-header {
@@ -336,13 +333,13 @@ const services = Object.values(allServices)
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: -0.01em;
-    color: #000;
+    color: #2F261B;
   }
 
   .card-number {
     font-size: 1rem;
     font-weight: 600;
-    color: #333;
+    color: #2F261B;
   }
 
   .card-content {
@@ -368,7 +365,7 @@ const services = Object.values(allServices)
   .card-title {
     font-size: 1.6rem;
     font-weight: 700;
-    color: #000;
+    color: #2F261B;
     line-height: 1.3;
     margin-bottom: 1rem;
   }
@@ -382,14 +379,14 @@ const services = Object.values(allServices)
   .card-description {
     font-size: 1rem;
     line-height: 1.6;
-    color: #333;
+    color: #483A28;
     margin-bottom: 1.5rem;
   }
 
   .card-button {
     display: inline-block;
     padding: 0.6rem 1.2rem;
-    background: #1a1a1a;
+    background: #2F261B;
     color: #fff;
     border-radius: 50px;
     font-size: 0.85rem;
@@ -401,7 +398,7 @@ const services = Object.values(allServices)
   }
 
   .card-button:hover {
-    background: #333;
+    background: #3d3325;
     transform: translateY(-2px);
   }
 </style>
