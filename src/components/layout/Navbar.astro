@@ -88,8 +88,8 @@ const alternatePath = isEnglish
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden pb-4">
-      <div class="flex flex-col space-y-4">
+    <div id="mobile-menu" class="md:hidden pb-4">
+      <div class="flex flex-col space-y-4 items-center">
         <a href="#about" class="nav-link">{t("nav.about")}</a>
         <a href="#services" class="nav-link">{t("nav.services")}</a>
         <a href="#gallery" class="nav-link">{t("nav.gallery")}</a>
@@ -191,10 +191,25 @@ const alternatePath = isEnglish
     background-color: #483A28;
   }
 
-  /* Menú mobile siempre con fondo sólido para legibilidad */
+  /* Menú mobile — dropdown absoluto, no estira el nav */
   #mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     background-color: #F9F6F1;
-    @apply backdrop-blur-sm;
+    @apply backdrop-blur-sm shadow-md;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: max-height 250ms ease-in-out, opacity 250ms ease-in-out, visibility 250ms ease-in-out;
+  }
+
+  #mobile-menu.is-open {
+    max-height: 300px;
+    opacity: 1;
+    visibility: visible;
   }
 
   #mobile-menu .nav-link {
@@ -237,17 +252,17 @@ const alternatePath = isEnglish
   const closeIcon = menuButton?.querySelector(".close");
 
   menuButton?.addEventListener("click", () => {
-    const isOpen = mobileMenu?.classList.contains("hidden");
+    const isOpen = mobileMenu?.classList.contains("is-open");
 
-    if (isOpen) {
-      mobileMenu?.classList.remove("hidden");
+    if (!isOpen) {
+      mobileMenu?.classList.add("is-open");
       hamburgerIcon?.classList.add("hidden");
       closeIcon?.classList.remove("hidden");
       menuButton?.setAttribute("aria-expanded", "true");
       mobileMenuOpen = true;
       navbar?.classList.add("navbar-scrolled"); // Force scrolled state
     } else {
-      mobileMenu?.classList.add("hidden");
+      mobileMenu?.classList.remove("is-open");
       hamburgerIcon?.classList.remove("hidden");
       closeIcon?.classList.add("hidden");
       menuButton?.setAttribute("aria-expanded", "false");
@@ -260,7 +275,7 @@ const alternatePath = isEnglish
   const mobileLinks = mobileMenu?.querySelectorAll("a");
   mobileLinks?.forEach((link) => {
     link.addEventListener("click", () => {
-      mobileMenu?.classList.add("hidden");
+      mobileMenu?.classList.remove("is-open");
       hamburgerIcon?.classList.remove("hidden");
       closeIcon?.classList.add("hidden");
       menuButton?.setAttribute("aria-expanded", "false");

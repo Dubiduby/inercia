@@ -4,6 +4,8 @@
  * Site footer with links, contact info, and copyright
  */
 import { useTranslations, type Language } from '../../i18n/utils';
+const siteData = await import('../../data/site.json');
+const { whatsapp } = siteData.default;
 
 interface Props {
   lang?: Language;
@@ -66,7 +68,7 @@ const currentYear = new Date().getFullYear();
             </a>
           </li>
           <li>
-            <a href="https://wa.me/1234567890" class="hover:text-[#3d3325] transition-colors text-sm" target="_blank" rel="noopener noreferrer">
+            <a href={`https://wa.me/${whatsapp}`} class="hover:text-[#3d3325] transition-colors text-sm" target="_blank" rel="noopener noreferrer">
               WhatsApp
             </a>
           </li>

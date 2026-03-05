@@ -3,7 +3,6 @@
  * Hero Section
  * Full-screen hero with background video and CTA
  */
-import Button from "../ui/Button.astro";
 import { useTranslations, type Language } from "../../i18n/utils";
 
 interface Props {
@@ -52,9 +51,6 @@ const { title, subtitle, videoUrl, ctaText } = heroData.default;
     <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto drop-shadow-md">
       {subtitle}
     </p>
-    <Button href="#contact" size="lg" variant="primary">
-      {ctaText}
-    </Button>
   </div>
 
   <!-- Sound Toggle Button -->
