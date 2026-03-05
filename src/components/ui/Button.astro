@@ -10,6 +10,8 @@ interface Props {
   size?: 'sm' | 'md' | 'lg';
   class?: string;
   style?: string;
+  target?: string;
+  rel?: string;
 }
 
 const {
@@ -17,7 +19,9 @@ const {
   variant = 'primary',
   size = 'md',
   class: className = '',
-  style = ''
+  style = '',
+  target,
+  rel
 } = Astro.props;
 
 const baseClasses = 'inline-flex items-center justify-center font-semibold transition-all duration-200 rounded-lg';
@@ -38,7 +42,7 @@ const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} 
 ---
 
 {href ? (
-  <a href={href} class={classes} style={style}>
+  <a href={href} class={classes} style={style} target={target} rel={rel}>
     <slot />
   </a>
 ) : (

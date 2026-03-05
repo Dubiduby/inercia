@@ -43,7 +43,7 @@ const whatsappMessage =
       <div class="grid md:grid-cols-2 gap-8 max-w-2xl md:max-w-4xl mx-auto">
         <!-- Email Contact -->
         <div
-          class="bg-[#F9F6F1] rounded-lg p-8 transition-all duration-300 flex flex-col"
+          class="bg-[#F9F6F1] rounded-lg p-4 md:p-8 transition-all duration-300 flex flex-col"
         >
           <svg
             class="w-12 h-12 mx-auto mb-4"
@@ -71,8 +71,8 @@ const whatsappMessage =
           <Button
             href={`mailto:${email}`}
             variant="primary"
-            class="mt-auto bg-[#2F261B] text-white hover:bg-[#3d3325] hover:-translate-y-0.5 text-sm px-6"
-            style="padding-left: 4rem; padding-right: 4rem;"
+            class="mt-auto text-white hover:-translate-y-0.5 text-sm w-full"
+            style="background-color: #2F261B;"
           >
             {email}
           </Button>
@@ -80,7 +80,7 @@ const whatsappMessage =
 
         <!-- WhatsApp Contact -->
         <div
-          class="bg-[#F9F6F1] rounded-lg p-8 transition-all duration-300 flex flex-col"
+          class="bg-[#F9F6F1] rounded-lg p-4 md:p-8 transition-all duration-300 flex flex-col"
         >
           <svg class="w-12 h-12 mx-auto mb-4" fill="#2F261B" viewBox="0 0 24 24">
             <path
@@ -98,7 +98,10 @@ const whatsappMessage =
           <Button
             href={`https://wa.me/${whatsapp}?text=${encodeURIComponent(whatsappMessage)}`}
             variant="primary"
-            class="mt-auto bg-[#2F261B] text-white hover:bg-[#3d3325] hover:-translate-y-0.5 text-sm px-4"
+            class="mt-auto text-white hover:-translate-y-0.5 text-sm w-full"
+            style="background-color: #2F261B;"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             +34 680 500 706
           </Button>

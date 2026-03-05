@@ -40,14 +40,14 @@ const services = Object.values(allServices)
 ---
 
 <section id="services-showcase" class="services-showcase">
-  <div class="max-w-[1400px] mx-auto px-4 lg:px-8">
+  <div class="container-custom">
     <h2
       class="text-3xl md:text-4xl font-bold text-[#2F261B] mb-8 md:mb-12 text-right"
     >
       {t("services.title")}
     </h2>
   </div>
-  <div class="services-container" id="services-container">
+  <div class="services-container container-custom" id="services-container">
     <!-- Video Side -->
     <div class="video-side">
       {
@@ -137,9 +137,6 @@ const services = Object.values(allServices)
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1rem;
   }
 
   /* Mobile: accordions first, videos second */
@@ -155,7 +152,6 @@ const services = Object.values(allServices)
     .services-container {
       grid-template-columns: 5fr 4fr;
       gap: 2rem;
-      padding: 0 2rem;
     }
 
     /* Desktop: video on left, cards on right */
