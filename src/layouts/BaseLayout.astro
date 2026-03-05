@@ -26,6 +26,7 @@ const { title, description, lang = "es", image, noindex } = Astro.props;
       noindex={noindex}
     />
     <StructuredData />
+    <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
     <!-- Skip to content link for accessibility -->
@@ -39,11 +40,11 @@ const { title, description, lang = "es", image, noindex } = Astro.props;
 
     <Footer lang={lang} />
 
-    <script>
-      if ((window as any).netlifyIdentity) {
-        (window as any).netlifyIdentity.on("init", (user: any) => {
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", function(user) {
           if (!user) {
-            (window as any).netlifyIdentity.on("login", () => {
+            window.netlifyIdentity.on("login", function() {
               document.location.href = "/admin/";
             });
           }
