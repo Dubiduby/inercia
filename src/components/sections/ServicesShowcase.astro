@@ -118,6 +118,39 @@ const services = Object.values(allServices)
                 <a href="#contact" class="card-button">
                   {lang === "es" ? "Más información" : "Learn more"}
                 </a>
+
+                {service.youtubeVideoId && (
+                  <div class={`card-video-mobile ${service.verticalVideo ? "vertical" : ""}`}>
+                    {service.verticalVideo ? (
+                      <div class="iphone-mockup">
+                        <div class="iphone-frame">
+                          <div class="iphone-notch" />
+                          <div class="iphone-screen">
+                            <iframe
+                              src={`https://www.youtube.com/embed/${service.youtubeVideoId}?rel=0`}
+                              title={service.title}
+                              class="video-iframe-vertical"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen
+                              loading="lazy"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div class="card-video-mobile-wrapper">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${service.youtubeVideoId}?rel=0`}
+                          title={service.title}
+                          class="video-iframe"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowfullscreen
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -396,6 +429,42 @@ const services = Object.values(allServices)
   .card-button:hover {
     background: #3d3325;
     transform: translateY(-2px);
+  }
+
+  /* Mobile inline videos */
+  .card-video-mobile {
+    display: none;
+  }
+
+  @media (max-width: 1023px) {
+    .video-side {
+      display: none;
+    }
+
+    .card-video-mobile {
+      display: block;
+      margin-top: 1.5rem;
+    }
+
+    .card-video-mobile.vertical {
+      display: flex;
+      justify-content: center;
+    }
+
+    .card-video-mobile-wrapper {
+      position: relative;
+      aspect-ratio: 16/9;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+
+    .card-video-mobile-wrapper .video-iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
 </style>
 
