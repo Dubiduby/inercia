@@ -1,6 +1,7 @@
 ---
 image: ""
-youtubeUrl: https://www.youtube.com/watch?v=ySEeS5kMb_k&list=RDySEeS5kMb_k&start_radio=1
-alt: Aang
+youtubeUrl: https://www.youtube.com/watch?v=QAC48hpk-p8
+alt: "Estrella Polar  "
+caption: Estrella Polar (Live Session)
 order: 12
 ---
